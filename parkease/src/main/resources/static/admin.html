@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ParkEase Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#0f1115;
+color:#e8e8e8;
+display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0b0d10;
+border-right:1px solid #222;
+padding:25px;
+}
+
+.logo{
+font-size:22px;
+font-weight:600;
+color:#2ecc71;
+margin-bottom:35px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar li{
+padding:12px;
+border-radius:6px;
+cursor:pointer;
+color:#aaa;
+margin-bottom:6px;
+}
+
+.sidebar li:hover{
+background:#1a1f1b;
+color:#2ecc71;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:35px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+margin-bottom:25px;
+}
+
+.status{
+color:#2ecc71;
+}
+
+/* Cards */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.card{
+background:#15181d;
+padding:18px;
+border-radius:10px;
+border:1px solid #222;
+}
+
+.card h3{
+font-size:13px;
+color:#888;
+}
+
+.card p{
+font-size:22px;
+color:#2ecc71;
+margin-top:5px;
+}
+
+/* Parking */
+
+.parking{
+background:#15181d;
+padding:20px;
+border-radius:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(8,70px);
+gap:10px;
+margin-top:15px;
+}
+
+.slot{
+height:60px;
+border-radius:6px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+position:relative;
+}
+
+.available{
+background:#1e3d2f;
+color:#2ecc71;
+}
+
+.occupied{
+background:#3d1e1e;
+color:#ff6b6b;
+}
+
+.sensor{
+width:8px;
+height:8px;
+border-radius:50%;
+position:absolute;
+top:6px;
+right:6px;
+}
+
+.online{background:#2ecc71;}
+.offline{background:#ff4d4d;}
+
+/* Table */
+
+.table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.table th,.table td{
+padding:10px;
+border-bottom:1px solid #222;
+text-align:left;
+}
+
+/* Chart */
+
+.chart{
+background:#15181d;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+/* Log */
+
+.logpanel{
+margin-top:20px;
+background:#15181d;
+padding:15px;
+border-radius:10px;
+height:180px;
+overflow:auto;
+font-size:12px;
+}
+
+/* Pages */
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+button{
+background:#2ecc71;
+border:none;
+padding:6px 10px;
+border-radius:5px;
+cursor:pointer;
+margin-right:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">ParkEase</div>
+
+<ul>
+<li onclick="showPage('dashboard')">Dashboard</li>
+<li onclick="showPage('parkingPage')">Parking Control</li>
+<li onclick="showPage('revenuePage')">Revenue</li>
+<li onclick="showPage('complaintsPage')">Complaints</li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>Admin Control Center</h1>
+<div class="status">● System Live</div>
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="page active">
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Slots</h3>
+<p>64</p>
+</div>
+
+<div class="card">
+<h3>Available</h3>
+<p id="availableSlots">0</p>
+</div>
+
+<div class="card">
+<h3>Occupied</h3>
+<p id="occupiedSlots">0</p>
+</div>
+
+<div class="card">
+<h3>Today's Revenue</h3>
+<p id="todayRevenue">₹4200</p>
+</div>
+
+</div>
+
+<div class="chart">
+<canvas id="trendChart"></canvas>
+</div>
+
+</div>
+
+<!-- PARKING PAGE -->
+
+<div id="parkingPage" class="page">
+
+<h2>Live Parking Sensors</h2>
+
+<div class="parking">
+<div class="grid" id="slotGrid"></div>
+</div>
+
+<div class="logpanel" id="logs"></div>
+
+</div>
+
+<!-- REVENUE PAGE -->
+
+<div id="revenuePage" class="page">
+
+<h2>Revenue Analytics</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Revenue</h3>
+<p id="totalRevenue">₹52000</p>
+</div>
+
+<div class="card">
+<h3>Today's Revenue</h3>
+<p id="todayRevenue2">₹4200</p>
+</div>
+
+<div class="card">
+<h3>Pending Payments</h3>
+<p id="pendingAmount">₹0</p>
+</div>
+
+</div>
+
+<div>
+
+<button onclick="filterPayments('all')">All</button>
+<button onclick="filterPayments('paid')">Paid</button>
+<button onclick="filterPayments('pending')">Pending</button>
+
+</div>
+
+<div class="logpanel" id="paymentFeed"></div>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>User</th>
+<th>Slot</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody id="paymentTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- COMPLAINTS -->
+
+<div id="complaintsPage" class="page">
+
+<h2>User Complaints</h2>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>User</th>
+<th>Complaint</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="complaintTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+/* Navigation */
+
+function showPage(id){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active")
+})
+
+document.getElementById(id).classList.add("active")
+
+}
+
+/* Parking Slots */
+
+const slots=[]
+
+for(let i=1;i<=64;i++){
+
+slots.push({
+id:i,
+status:Math.random()>0.6?'occupied':'available',
+sensor:true
+})
+
+}
+
+const grid=document.getElementById("slotGrid")
+
+function renderSlots(){
+
+grid.innerHTML=''
+
+slots.forEach(s=>{
+
+const div=document.createElement("div")
+
+div.className="slot "+s.status
+div.innerText="S"+s.id
+
+const sensor=document.createElement("div")
+
+sensor.className="sensor "+(s.sensor?'online':'offline')
+
+div.appendChild(sensor)
+
+grid.appendChild(div)
+
+})
+
+updateStats()
+
+}
+
+renderSlots()
+
+function updateStats(){
+
+const available=slots.filter(s=>s.status==="available").length
+const occupied=slots.filter(s=>s.status==="occupied").length
+
+document.getElementById("availableSlots").innerText=available
+document.getElementById("occupiedSlots").innerText=occupied
+
+}
+
+/* Chart */
+
+new Chart(document.getElementById("trendChart"),{
+
+type:'line',
+
+data:{
+labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+datasets:[
+{
+label:'Bookings',
+data:[12,18,10,15,25,30,20],
+borderColor:'#2ecc71'
+},
+{
+label:'Revenue',
+data:[900,1200,700,1400,2000,2600,1900],
+borderColor:'#3498db'
+}
+]
+
+}
+
+})
+
+/* Logs */
+
+function log(msg){
+
+const panel=document.getElementById("logs")
+
+const line=document.createElement("div")
+
+line.innerText=new Date().toLocaleTimeString()+" - "+msg
+
+panel.prepend(line)
+
+}
+
+/* Sensor simulation */
+
+setInterval(()=>{
+
+const r=Math.floor(Math.random()*slots.length)
+
+slots[r].status=slots[r].status==="available"?"occupied":"available"
+
+log("Sensor update slot "+slots[r].id)
+
+renderSlots()
+
+},4000)
+
+/* Payments */
+
+let payments=[
+{user:"Rahul",slot:"S12",amount:80,status:"paid",time:"10:20"},
+{user:"Simran",slot:"S03",amount:60,status:"pending",time:"10:40"},
+{user:"Aman",slot:"S21",amount:90,status:"paid",time:"11:10"}
+]
+
+function renderPayments(list){
+
+const table=document.getElementById("paymentTable")
+
+table.innerHTML=""
+
+list.forEach(p=>{
+
+table.innerHTML+=`
+<tr>
+<td>${p.user}</td>
+<td>${p.slot}</td>
+<td>₹${p.amount}</td>
+<td>${p.status}</td>
+<td>${p.time}</td>
+</tr>
+`
+
+})
+
+}
+
+renderPayments(payments)
+
+function filterPayments(type){
+
+if(type==="all") renderPayments(payments)
+
+else{
+
+const filtered=payments.filter(p=>p.status===type)
+
+renderPayments(filtered)
+
+}
+
+}
+
+function addPaymentFeed(msg){
+
+const feed=document.getElementById("paymentFeed")
+
+const line=document.createElement("div")
+
+line.innerText=new Date().toLocaleTimeString()+" - "+msg
+
+feed.prepend(line)
+
+}
+
+/* Live payment simulation */
+
+setInterval(()=>{
+
+const users=["Rahul","Simran","Aman","Priya"]
+
+const payment={
+user:users[Math.floor(Math.random()*users.length)],
+slot:"S"+Math.floor(Math.random()*64),
+amount:60+Math.floor(Math.random()*40),
+status:Math.random()>0.2?"paid":"pending",
+time:new Date().toLocaleTimeString()
+}
+
+payments.unshift(payment)
+
+renderPayments(payments)
+
+addPaymentFeed("Payment "+payment.status+" - "+payment.user+" ₹"+payment.amount)
+
+},7000)
+
+/* Complaints */
+
+const complaints=[
+{user:"Rahul",text:"Slot showed free but occupied",status:"Open"},
+{user:"Simran",text:"Payment deducted twice",status:"Pending"}
+]
+
+const table=document.getElementById("complaintTable")
+
+function renderComplaints(){
+
+table.innerHTML=""
+
+complaints.forEach((c,i)=>{
+
+table.innerHTML+=`
+<tr>
+<td>${c.user}</td>
+<td>${c.text}</td>
+<td>${c.status}</td>
+<td><button onclick="resolveComplaint(${i})">Resolve</button></td>
+</tr>
+`
+
+})
+
+}
+
+function resolveComplaint(i){
+
+complaints[i].status="Resolved"
+
+renderComplaints()
+
+}
+
+renderComplaints()
+
+</script>
+
+</body>
+</html>

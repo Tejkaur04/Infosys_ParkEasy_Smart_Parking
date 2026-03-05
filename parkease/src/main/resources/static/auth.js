@@ -23,26 +23,14 @@ if(msg==="Signup successful")
 
 }
 
-async function loginUser(e){
-e.preventDefault();
+function loginUser(event) {
+    event.preventDefault();
+    alert("Login clicked");
 
-```
-const data={
-    email:document.querySelector("input[type=email]").value,
-    password:document.querySelector("input[type=password]").value
-};
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-const res = await fetch("/api/auth/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(data)
-});
-
-const msg = await res.text();
-alert(msg);
-
-if(msg==="Login successful")
-    window.location="dashboard.html";
-```
-
+    if(email && password){
+        window.location.href = "admin.html";
+    }
 }
