@@ -1,0 +1,5 @@
+com\parkease\backend\controller\ParkingSpotController.class
+com\parkease\backend\model\ParkingSpot.class
+com\parkease\backend\config\WebConfig.class
+com\parkease\backend\service\ParkingSpotService.class
+com\parkease\backend\AvailabilityBackendApplication.class

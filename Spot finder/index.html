@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase | Smart Parking Spot Finder</title>
+    <meta name="description" content="Find and book the perfect parking spot in seconds with ParkEase smartly.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">🅿️</span>
+            <h1>Park<span>Ease</span></h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-primary">Register</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="badge">🚗 The #1 Smart Parking App</div>
+            <h2 class="hero-title">Find Your Perfect <br> <span class="gradient-text">Parking Spot</span> In Seconds</h2>
+            <p class="hero-subtitle">Stop circling the block. Reserve your spot in advance, navigate directly to it, and pay seamlessly with ParkEase.</p>
+            
+            <div class="search-box">
+                <div class="search-input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <input type="text" placeholder="Where do you want to park?">
+                </div>
+                <!-- Search button links to Search Parking -->
+                <a href="search.html" class="btn btn-search">Search Spaces</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>50k+</h3>
+                    <p>Spots Available</p>
+                </div>
+                <div class="stat">
+                    <h3>2M+</h3>
+                    <p>Happy Drivers</p>
+                </div>
+                <div class="stat">
+                    <h3>100+</h3>
+                    <p>Cities Covered</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image-wrapper">
+            <div class="glow-circle"></div>
+            <!-- Glassmorphic card graphic -->
+            <div class="glass-card main-card">
+                <div class="card-header">
+                    <div class="dot green"></div>
+                    <span class="status">Live Availability</span>
+                </div>
+                <div class="spot-map">
+                    <div class="spot occupied">A1</div>
+                    <div class="spot available glow">A2</div>
+                    <div class="spot occupied">A3</div>
+                    <div class="spot available glow">B1</div>
+                    <div class="spot occupied">B2</div>
+                    <div class="spot available glow">B3</div>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <p class="label">Selected Spot</p>
+                        <p class="value">B1 - Premium</p>
+                    </div>
+                    <a href="booking.html" class="btn btn-small">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Why Choose ParkEase?</h2>
+            <p>We take the stress out of urban parking with smart technology.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3>Real-Time Availability</h3>
+                <p>Know exactly which spots are open before you even arrive. No more guessing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <h3>Seamless Booking</h3>
+                <p>Reserve your spot with a single tap. Your space is guaranteed waiting for you.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                </div>
+                <h3>Smart Navigation</h3>
+                <p>Get turn-by-turn directions directly to your reserved parking space.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
