@@ -1,36 +1,45 @@
 package com.parkease.controller;
-
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.parkease.model.User;
-import com.parkease.service.UserService;
-
+ 
+import com.parkease.dto.auth.*;
+import com.parkease.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+ 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
-@CrossOrigin
 public class AuthController {
-
-    private final UserService service;
-
-    @PostMapping("/signup")
-    public String signup(@RequestBody User user){
-        return service.register(user);
+ 
+    private final AuthService authService;
+ 
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
     }
-
+ 
     @PostMapping("/login")
-    public String login(@RequestBody Map<String,String> body){
-        return service.login(
-                body.get("email"),
-                body.get("password")
-        );
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
+    }
+ 
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authService.refresh(request));
+    }
+ 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<MessageResponse> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        authService.forgotPassword(request.getEmail());
+        return ResponseEntity.ok(new MessageResponse("Password reset email sent"));
+    }
+ 
+    @PostMapping("/reset-password")
+    public ResponseEntity<MessageResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
+        return ResponseEntity.ok(new MessageResponse("Password reset successful"));
     }
 }
+ 
+ 
