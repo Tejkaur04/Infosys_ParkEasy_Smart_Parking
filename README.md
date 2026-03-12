@@ -1,4 +1,4 @@
-# 🅿️ ParkWise — Smart Parking Spot Finder
+# 🅿️ ParkEase — Smart Parking Spot Finder
 
 A full-stack web application for finding, booking, and managing parking spots. Built with Spring Boot, React, and MySQL.
 
@@ -7,10 +7,10 @@ A full-stack web application for finding, booking, and managing parking spots. B
 ## 🗂️ Project Structure
 
 ```
-smart-parking/
+INFOSYS_PARKEASY_SMART_PARKING/
 ├── database/
 │   └── schema.sql                  ← MySQL database schema + sample data
-├── backend/
+├── parkease/                       ← (Backend Folder)
 │   ├── pom.xml                     ← Maven dependencies
 │   ├── application.yml             ← Spring Boot configuration
 │   ├── entities.java               ← JPA entities (User, Booking, Payment, etc.)
