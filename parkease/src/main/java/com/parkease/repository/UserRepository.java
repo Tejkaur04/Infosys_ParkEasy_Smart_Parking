@@ -1,12 +1,17 @@
 package com.parkease.repository;
 
-import java.util.Optional;
-
+import com.parkease.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.parkease.model.User;
-
-public interface UserRepository extends JpaRepository<User,Long>{
-
+import org.springframework.stereotype.Repository;
+ 
+import java.util.Optional;
+ 
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+ 
     Optional<User> findByEmail(String email);
+ 
+    boolean existsByEmail(String email);
+ 
+    Optional<User> findByResetPasswordToken(String token);
 }

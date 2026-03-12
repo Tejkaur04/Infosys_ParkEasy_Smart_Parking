@@ -1,5 +1,3 @@
-package com.parkease.service;
-
 import com.parkease.dto.user.*;
 import com.parkease.entity.*;
 import com.parkease.exception.ResourceNotFoundException;

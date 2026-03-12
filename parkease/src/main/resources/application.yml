@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/smart_parking?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:tej123}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

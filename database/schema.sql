@@ -2,8 +2,8 @@
 -- SMART PARKING SPOT FINDER - DATABASE SCHEMA (MySQL)
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS smart_parking;
-USE smart_parking;
+CREATE DATABASE IF NOT EXISTS parkeasy;
+USE parkeasy;
 
 -- Users
 CREATE TABLE users (
