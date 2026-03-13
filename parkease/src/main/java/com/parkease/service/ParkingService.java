@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.parkease.model.ParkingSlot;
+import com.parkease.entity.ParkingLocation;
 import com.parkease.repository.ParkingLocationRepository;
 
 @Service
@@ -16,11 +16,11 @@ public class ParkingService {
         this.repo = repo;
     }
 
-    public List<ParkingSlot> getSlots() {
+    public List<ParkingLocation> getSlots() {
         return repo.findAll();
     }
 
-    public ParkingSlot addSlot(ParkingSlot slot) {
+    public ParkingLocation addSlot(ParkingLocation slot) {
         return repo.save(slot);
     }
 }

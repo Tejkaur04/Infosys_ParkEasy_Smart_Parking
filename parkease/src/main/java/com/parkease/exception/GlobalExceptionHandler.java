@@ -1,14 +1,17 @@
 package com.parkease.exception;
  
-import org.springframework.http.*;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
- 
-import java.time.LocalDateTime;
-import java.util.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
  
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -61,13 +64,4 @@ public class GlobalExceptionHandler {
     }
 }
  
- 
-// Custom exceptions
-class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message) { super(message); }
-}
- 
-class SpotUnavailableException extends RuntimeException {
-    public SpotUnavailableException(String message) { super(message); }
-}
  

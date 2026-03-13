@@ -1,18 +1,28 @@
-import com.parkease.dto.user.*;
-import com.parkease.entity.*;
-import com.parkease.exception.ResourceNotFoundException;
-import com.parkease.repository.*;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
-import java.util.List;
-import java.util.stream.Collectors;
+
+import com.parkease.dto.user.AddVehicleRequest;
+import com.parkease.dto.user.ChangePasswordRequest;
+import com.parkease.dto.user.NotificationDTO;
+import com.parkease.dto.user.UpdateProfileRequest;
+import com.parkease.dto.user.UserDTO;
+import com.parkease.dto.user.VehicleDTO;
+import com.parkease.entity.User;
+import com.parkease.entity.Vehicle;
+import com.parkease.exception.ResourceNotFoundException;
+import com.parkease.repository.NotificationRepository;
+import com.parkease.repository.UserRepository;
+import com.parkease.repository.VehicleRepository;
+
+import lombok.RequiredArgsConstructor;
  
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserConfigService {
  
     private final UserRepository userRepository;
     private final VehicleRepository vehicleRepository;
