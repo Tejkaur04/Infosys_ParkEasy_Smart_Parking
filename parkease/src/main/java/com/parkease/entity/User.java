@@ -48,6 +48,9 @@ public class User implements UserDetails {
  
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
  
     @PrePersist
     protected void onCreate() { createdAt = updatedAt = LocalDateTime.now(); }
