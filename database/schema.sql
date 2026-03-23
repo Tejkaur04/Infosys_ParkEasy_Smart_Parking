@@ -182,3 +182,5 @@ VALUES
 ('Airport Terminal Garage','1 Airport Blvd','New York','NY','10002',40.6413,-73.7781,500,120,8.00,50.00,TRUE,FALSE,TRUE,4.2,89),
 ('Midtown Smart Lot','456 Park Ave','New York','NY','10022',40.7549,-73.9840,100,23,6.50,40.00,FALSE,TRUE,FALSE,4.7,210),
 ('West Side Parking Hub','789 West Side Hwy','New York','NY','10036',40.7614,-74.0021,150,67,4.00,28.00,FALSE,FALSE,TRUE,3.9,54);
+
+UPDATE users SET role = 'ADMIN' WHERE email = 'your@email.com';
