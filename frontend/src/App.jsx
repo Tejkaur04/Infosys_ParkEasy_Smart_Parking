@@ -154,19 +154,28 @@ const MOCK = {
    useAPI hook — tries real API, falls back to mock
 ═══════════════════════════════════════════════════════════ */
 function useAPI(apiFn, mockData, deps = []) {
-  const [data, setData]     = useState(null);
-  const [loading, setLoad]  = useState(true);
-  const [error, setError]   = useState(null);
+  const [data, setData]    = useState(null);
+  const [loading, setLoad] = useState(true);
+  const [error, setError]  = useState(null);
 
   const load = useCallback(async () => {
-    setLoad(true); setError(null);
+    setLoad(true);
+    setError(null);
     try {
       const res = await apiFn();
       setData(res);
     } catch (e) {
-  console.error("API ERROR:", e);
-  setError(e);
-} finally { setLoad(false); }
+      console.warn("API unavailable, falling back to mock data:", e.message);
+      try {
+        const mock = typeof mockData === 'function' ? mockData() : mockData;
+        setData(mock);
+      } catch (mockErr) {
+        console.error("Mock data also failed:", mockErr);
+        setError(e);
+      }
+    } finally {
+      setLoad(false);
+    }
   }, deps);
 
   useEffect(() => { load(); }, [load]);
