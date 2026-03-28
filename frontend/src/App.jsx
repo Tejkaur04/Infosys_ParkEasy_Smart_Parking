@@ -27,13 +27,39 @@ const api = {
         body: body ? JSON.stringify(body) : undefined,
       });
       const data = await res.json().catch(() => ({}));
+      if (path.includes("/spots")) {
+      return MOCK.spots();
+      }
       if (!res.ok) throw new Error(data.message || data.error || `HTTP ${res.status}`);
       return data;
-    } catch (e) {
-      // Fallback to mock data when backend is unavailable
-      console.warn("API unavailable, using mock:", path);
-      throw e;
-    }
+    }catch (e) {
+  console.warn("Using MOCK data for:", path);
+
+  if (path.includes("parking-locations") && path.includes("spots")) {
+    return MOCK.spots();
+  }
+
+  if (path.includes("parking-locations")) {
+    return MOCK.locations;
+  }
+
+  if (path.includes("bookings")) {
+    return MOCK.bookings;
+  }
+
+  if (path.includes("dashboard")) {
+    return MOCK.dashboard;
+  }
+
+  return [];
+}
+    // } catch (e) {
+    //   // Fallback to mock data when backend is unavailable
+    //   console.warn("API unavailable, using mock:", path);
+    //   // throw e;
+    //   // return mockData;
+    //   return null;
+    // }
   },
 
   
@@ -134,6 +160,7 @@ const MOCK = {
     { id:3, bookingReference:"PW-003", locationName:"Airport Terminal",  spotNumber:"C-33", status:"CONFIRMED", startTime:"2024-12-05T08:00", endTime:"2024-12-05T20:00", totalAmount:96.00, durationHours:12 },
     { id:4, bookingReference:"PW-004", locationName:"West Side Hub",     spotNumber:"D-08", status:"CANCELLED", startTime:"2024-11-28T14:00", endTime:"2024-11-28T18:00", totalAmount:16.00, durationHours:4 },
   ],
+  
   dashboard: { totalBookings:24, completedBookings:20, activeBookings:1, totalSpent:487, unreadNotifications:3 },
   admin: {
     stats: { totalUsers:1248, totalBookings:3890, totalRevenue:48750, activeLocations:50, todayBookings:42, pendingTickets:7 },
@@ -149,6 +176,19 @@ const MOCK = {
     ],
   },
 };
+spots: (id) => {
+  const spots = [];
+
+  for (let i = 1; i <= 50; i++) {
+    spots.push({
+      id: i,
+      spotNumber: `A-${i}`,
+      status: Math.random() > 0.3 ? "AVAILABLE" : "OCCUPIED",
+    });
+  }
+
+  return spots;
+}
 
 /* ═══════════════════════════════════════════════════════════
    useAPI hook — tries real API, falls back to mock
