@@ -30,10 +30,15 @@ const api = {
       if (path.includes("/spots")) {
       return MOCK.spots();
       }
+     
       if (!res.ok) throw new Error(data.message || data.error || `HTTP ${res.status}`);
       return data;
     }catch (e) {
   console.warn("Using MOCK data for:", path);
+
+   if (path.includes("/auth/login")) {
+  return MOCK.auth.login(body?.email, body?.password);
+}
 
   if (path.includes("parking-locations") && path.includes("spots")) {
     return MOCK.spots();
@@ -148,6 +153,7 @@ console.log("TOKEN:", localStorage.getItem("pw_token"));
    MOCK DATA (used as fallback when backend is offline)
 ═══════════════════════════════════════════════════════════ */
 const MOCK = {
+  
   locations: [
     { id:1, name:"Downtown Central", address:"123 Main Street", city:"New York", state:"NY", availableSpots:45, totalSpots:200, hourlyRate:5.00, dailyRate:35, rating:4.5, totalReviews:128, isCovered:true, hasEvCharging:true, hasSecurity:true, is24Hours:true, latitude:40.7128, longitude:-74.006 },
     { id:2, name:"Airport Terminal Garage", address:"1 Airport Blvd", city:"New York", state:"NY", availableSpots:120, totalSpots:500, hourlyRate:8.00, dailyRate:50, rating:4.2, totalReviews:89, isCovered:true, hasEvCharging:false, hasSecurity:true, is24Hours:true, latitude:40.6413, longitude:-73.7781 },
@@ -175,8 +181,20 @@ const MOCK = {
       { id:2, userId:2, userName:"Jane Smith",email:"jane@example.com",category:"PAYMENT", subject:"Refund not received",      message:"It's been 7 days since I cancelled.", status:"PENDING", createdAt:"2024-11-30" },
     ],
   },
-};
-spots: (id) => {
+  auth: {
+  login: (email, password) => {
+    return {
+      token: "mock-token-123",
+      user: {
+        id: 1,
+        firstName: "Tejinder",
+        lastName: "Kaur",
+        email: email,
+        role: "USER"
+      }
+    };
+  }
+},spots: (id) => {
   const spots = [];
 
   for (let i = 1; i <= 50; i++) {
@@ -189,6 +207,9 @@ spots: (id) => {
 
   return spots;
 }
+};
+
+
 
 /* ═══════════════════════════════════════════════════════════
    useAPI hook — tries real API, falls back to mock
