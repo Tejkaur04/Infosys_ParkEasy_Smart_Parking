@@ -89,14 +89,14 @@ public class AuthService {
     }
  
     private UserDTO mapToUserDTO(User user) {
-        return UserDTO.builder()
-            .id(user.getId())
-            .email(user.getEmail())
-            .firstName(user.getFirstName())
-            .lastName(user.getLastName())
-            .phone(user.getPhone())
-            .role(user.getRole().name())
-            .build();
-    }
+    UserDTO dto = new UserDTO();
+    dto.setId(user.getId());
+    dto.setEmail(user.getEmail());
+    dto.setFirstName(user.getFirstName());
+    dto.setLastName(user.getLastName());
+    dto.setPhone(user.getPhone());
+    dto.setRole(user.getRole().name());
+    return dto;
+}
 }
  

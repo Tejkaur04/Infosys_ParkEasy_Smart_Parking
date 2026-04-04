@@ -57,6 +57,7 @@ public class User implements UserDetails {
  
     @PreUpdate
     protected void onUpdate() { updatedAt = LocalDateTime.now(); }
+
  
     public enum Role { USER, ADMIN, OPERATOR }
  

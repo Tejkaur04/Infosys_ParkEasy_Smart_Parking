@@ -5,6 +5,7 @@ spring:
     password: ${DB_PASSWORD:tej123}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
+    open-in-view: true
     hibernate:
       ddl-auto: update
     show-sql: false
@@ -36,4 +37,4 @@ app:
 logging:
   level:
     com.parkwise: DEBUG
-    org.springframework.security: INFO
+    org.springframework.security: DEBUG

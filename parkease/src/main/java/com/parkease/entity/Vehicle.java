@@ -29,6 +29,10 @@ public class Vehicle {
     private LocalDateTime createdAt;
  
     @PrePersist protected void onCreate() { createdAt = LocalDateTime.now(); }
+
+    public void setUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
  
     public enum VehicleType { COMPACT, SEDAN, SUV, TRUCK, MOTORCYCLE, ELECTRIC }
 }

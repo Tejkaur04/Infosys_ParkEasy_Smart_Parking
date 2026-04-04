@@ -4,6 +4,10 @@ import lombok.*;
  
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class UserDTO {
+
+    public static Object builder() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     private Long id;
     private String email;
     private String firstName;
